@@ -13,7 +13,6 @@ Un servicio de acortamiento de URLs implementado en Go, con interfaz web y almac
 ## Requisitos
 
 - Go 1.16 o superior
-- Redis Server
 
 ## Instalación
 
