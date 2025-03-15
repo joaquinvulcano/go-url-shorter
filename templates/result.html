@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Acortada</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>¡URL Acortada!</h1>
+        <div class="result-box">
+            <div class="url-label">URL Original:</div>
+            <div class="url-display">
+                <a href="{{.LongURL}}" target="_blank">{{.LongURL}}</a>
+            </div>
+            
+            <div class="url-label">URL Acortada:</div>
+            <div class="url-display full-url">
+                <a href="/{{.ShortURL}}" id="shortUrl" target="_blank"></a>
+                <button onclick="copyToClipboard()" class="copy-button">Copiar</button>
+            </div>
+        </div>
+        <a href="/" class="back-button">Acortar otra URL</a>
+    </div>
+    <script>
+        // Construir la URL completa al cargar la página
+        window.onload = function() {
+            const baseUrl = window.location.origin;
+            const shortPath = '/{{.ShortURL}}';
+            const fullUrl = baseUrl + shortPath;
+            document.getElementById('shortUrl').textContent = fullUrl;
+            document.getElementById('shortUrl').href = shortPath;
+        };
+
+        function copyToClipboard() {
+            const shortUrl = document.getElementById('shortUrl').textContent;
+            navigator.clipboard.writeText(shortUrl).then(() => {
+                const button = document.querySelector('.copy-button');
+                button.textContent = '¡Copiado!';
+                button.style.backgroundColor = '#059669';
+                setTimeout(() => {
+                    button.textContent = 'Copiar';
+                    button.style.backgroundColor = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar:', err);
+            });
+        }
+    </script>
+</body>
+</html>
